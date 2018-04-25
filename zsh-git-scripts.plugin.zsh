@@ -37,9 +37,14 @@ function git-squash-branch() {
 
     git reset --soft HEAD~$count_commits
     
-    if (( ! $(git commit) )); then
-        if (( verify "Would you like to reset? (y/n)" )); then
+    git commit
+    if (( $? == 0 )); then
+        echo Done
+    else
+        verify "Would you like to reset? (y/n)"
+        if (( $? == 0 )); then
             git reset --soft $commit
+            echo "Reset to commit $commit: $(git log --format=%B -n 1 ${commit})"
         fi
     fi
         
@@ -101,13 +106,13 @@ function verify()
 {
     local PROMPT=${1:-"Are you sure? (y/n)"}
     
-    while [[ true ]]; do
+    while  true ; do
         echo $PROMPT
         read RESPONSE
 
-        if [ "$RESPONSE" == "y" ]; then
+        if [[ "$RESPONSE" -eq "y" ]]; then
             return 0
-        elif [ "$RESPONSE" == "n" ]; then
+        elif [[ "$RESPONSE" -eq "n" ]]; then
             return 1
         else
             echo "Please enter valid response."

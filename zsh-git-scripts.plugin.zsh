@@ -29,12 +29,20 @@ function git-squash-branch() {
         exit -1
     fi
     local branch=$1
+    
+    local commit=$(git rev-parse HEAD)
 
     local count_commits=$(git rev-list --count HEAD ^${branch})
     echo "Number of commits since '$branch': $count_commits"
 
     git reset --soft HEAD~$count_commits
-    git commit
+    
+    if (( ! $(git commit) )); then
+        if (( verify "Would you like to reset? (y/n)" )); then
+            git reset --soft $commit
+        fi
+    fi
+        
 }
 
 function git-remove-merged() {

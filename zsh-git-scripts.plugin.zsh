@@ -8,6 +8,8 @@ __command_successful () {
   return 0
 }
 
+
+# Pulled function from https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/git-extras/git-extras.plugin.zsh
 __branch_names() {
     local expl
     declare -a branch_names

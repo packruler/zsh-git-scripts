@@ -2,24 +2,6 @@
 
 compdef _git-squash-branch git-squash-branch
 
-__command_successful () {
-  if (( ${#pipestatus:#0} > 0 )); then
-    _message 'not a git repository'
-    return 1
-  fi
-  return 0
-}
-
-
-# Pulled function from https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/git-extras/git-extras.plugin.zsh
-__branch_names() {
-    local expl
-    declare -a branch_names
-    branch_names=(${${(f)"$(_call_program branchrefs git for-each-ref --format='"%(refname)"' refs/heads 2>/dev/null)"}#refs/heads/})
-    __command_successful || return
-    _wanted branch-names expl branch-name compadd $* - $branch_names
-}
-
 _git-squash-branch() {
     _arguments \
         ':branch-name:__branch_names'

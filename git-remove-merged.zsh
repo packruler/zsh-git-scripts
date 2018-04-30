@@ -4,8 +4,11 @@ compdef _git-remove-merged git-remove-merged
 
 _git-remove-merged() {
     _arguments \
-        ':branch-name:__branch_names'
+        '*:Branch to ignore:__branch_names'
 }
+
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '%B%d%b'
 
 function git-remove-merged() {
     # Define functions that will only be used here locally

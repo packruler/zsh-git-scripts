@@ -28,7 +28,7 @@ function git-remove-merged() {
     local CURRENT_BRANCH=$(git branch | grep \* | cut -d ' ' -f2)
     
     local EXCLUDE_STRING="master"
-    if [[ "$CURRENT_BRANCH" -ne "master" ]]; then
+    if [ "$CURRENT_BRANCH" != "master" ]; then
         # Add the base branch to exclude pattern with master
         EXCLUDE_STRING="master\|$CURRENT_BRANCH"
     fi

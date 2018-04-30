@@ -25,7 +25,7 @@ function git-remove-merged() {
     local CURRENT_BRANCH=$(git branch | grep \* | cut -d ' ' -f2)
     
     local EXCLUDE_STRING="master"
-    if [ "$CURRENT_BRANCH" != "master" ]; then
+    if [[ "$CURRENT_BRANCH" -ne "master" ]]; then
         # Add the base branch to exclude pattern with master
         EXCLUDE_STRING="master\|$CURRENT_BRANCH"
     fi
@@ -51,26 +51,26 @@ function git-remove-merged() {
     print -l ${BRANCHES_TO_DELETE[*]}
     
     verify "Are you sure you would like to delete these? (y/n)"
-    if (( $? == 1 )); then
+    if [[ $? -eq 1 ]]; then
         return
     fi
 
     # Convert array back to " " seperated string
     BRANCHES_TO_DELETE=${BRANCHES_TO_DELETE[*]}
     verify "Would you like to delete both LOCAL and REMOTE versions, THIS CANNOT BE UNDONE? (y/n)"
-    if (( $? == 0 )) ; then
+    if [[ $? -eq 0 ]] ; then
         deleteLocal $BRANCHES_TO_DELETE
         deleteRemote $BRANCHES_TO_DELETE
         return
     fi
 
     verify "Would you like to delete LOCAL versions? (y/n)"
-    if (( $? == 0 )) ; then
+    if [[ $? -eq 0 ]] ; then
         deleteLocal $BRANCHES_TO_DELETE
     fi
 
     verify "Would you like to delete REMOTE versions? (y/n)"
-    if (( $? == 0 )) ; then
+    if [[ $? -eq 0 ]] ; then
         deleteRemote $BRANCHES_TO_DELETE
     fi
 }

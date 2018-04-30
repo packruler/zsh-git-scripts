@@ -11,9 +11,9 @@ verify()
     while  true ; do
         echo $PROMPT
         read RESPONSE
-        if [ "$RESPONSE" = "y" ]; then
+        if [[ "$RESPONSE" -eq "y" ]]; then
             return 0
-        elif [ "$RESPONSE" = "n" ]; then
+        elif [[ "$RESPONSE" -eq "n" ]]; then
             return 1
         else
             echo "Please enter valid response."
@@ -22,7 +22,7 @@ verify()
 }
 
 __command_successful () {
-  if (( ${#pipestatus:#0} > 0 )); then
+  if [[ ${#pipestatus:#0} -lt 0 ]]s; then
     _message 'not a git repository'
     return 1
   fi

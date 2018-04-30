@@ -20,6 +20,10 @@ function git-squash-branch() {
     local commit=$(git rev-parse HEAD)
 
     local count_commits=$(git rev-list --count HEAD ^${branch})
+    if (( $count_commits <= 1 )); then
+        echo "No commits to squash"
+        return
+    fi
     echo "Number of commits since '$branch': $count_commits"
 
     git reset --soft HEAD~$count_commits

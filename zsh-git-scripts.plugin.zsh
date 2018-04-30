@@ -11,9 +11,9 @@ verify()
     while  true ; do
         echo $PROMPT
         read RESPONSE
-        if [[ "$RESPONSE" -eq "y" ]]; then
+        if [ "$RESPONSE" = "y" ]; then
             return 0
-        elif [[ "$RESPONSE" -eq "n" ]]; then
+        elif [ "$RESPONSE" = "n" ]; then
             return 1
         else
             echo "Please enter valid response."

@@ -22,7 +22,7 @@ verify()
 }
 
 __command_successful () {
-  if [[ ${#pipestatus:#0} -lt 0 ]]s; then
+  if (( ${#pipestatus:#0} > 0 )); then
     _message 'not a git repository'
     return 1
   fi

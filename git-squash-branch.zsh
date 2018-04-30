@@ -4,9 +4,11 @@ compdef _git-squash-branch git-squash-branch
 
 _git-squash-branch() {
     _arguments \
-        ':branch-name:__branch_names'
+        ':Name of Source Branch:__branch_names'
 }
 
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*:descriptions' format '%B%d%b'
 
 function git-squash-branch() {
     if (( ! $# == 1 )); then

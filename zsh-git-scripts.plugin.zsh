@@ -4,10 +4,9 @@ source $SCRIPTPATH/git-squash-branch.zsh
 source $SCRIPTPATH/git-remove-merged.zsh
 
 # Function to verify user wants to do something accepting "y" or "n" as a response
-verify()
-{
+verify() {
     local PROMPT=${1:-"Are you sure? (y/n)"}
-    
+
     while  true ; do
         echo $PROMPT
         read RESPONSE

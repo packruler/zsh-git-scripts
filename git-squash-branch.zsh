@@ -11,12 +11,12 @@ zstyle ':completion:*' group-name ''
 zstyle ':completion:*:descriptions' format '%B%d%b'
 
 function git-squash-branch() {
-    if [[ ! $# -eq 1 ]]; then
+    if [[  $# -ne 1 ]]; then
         echo "Usage: $0 (branch built from)"
         exit -1
     fi
     local branch=$1
-    
+
     local commit=$(git rev-parse HEAD)
 
     local count_commits=$(git rev-list --count HEAD ^${branch})
@@ -27,16 +27,16 @@ function git-squash-branch() {
     echo "Number of commits since '$branch': $count_commits"
 
     git reset --soft HEAD~$count_commits
-    
-    git commit
-    if [[ $? -eq 0 ]]; then
+
+
+    if git commit; then
         echo Done
     else
-        verify "Would you like to reset? (y/n)"
-        if [[ $? -eq 0 ]]; then
+
+        if verify "Would you like to reset? (y/n)"; then
             git reset --soft $commit
             echo "Reset to commit $commit: $(git log --format=%B -n 1 ${commit})"
         fi
     fi
-        
+
 }

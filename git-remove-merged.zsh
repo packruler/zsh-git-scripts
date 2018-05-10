@@ -52,7 +52,7 @@ function git-remove-merged() {
     echo "Branches to be deleted:"
     print -l ${BRANCHES_TO_DELETE[*]}
 
-    if verify "Are you sure you would like to delete these? (y/n)"; then
+    if ! verify "Are you sure you would like to delete these? (y/n)"; then
         return
     fi
 

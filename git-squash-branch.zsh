@@ -26,17 +26,22 @@ function git-squash-branch() {
     fi
     echo "Number of commits since '$branch': $count_commits"
 
+    commits=($(git rev-list HEAD ^$branch))
+    messages=$(git log HEAD ^${commits[-1]} --pretty=%s)
+
     git reset --soft HEAD~$count_commits
 
-
-    if git commit; then
-        echo Done
+    if verify "Would you like to include commit messages? (y/n)" ; then
+        git commit -e -m "Squashed messages:" -m "$messages"
     else
+        if git commit ; then
+            echo Done
+        else
 
-        if verify "Would you like to reset? (y/n)"; then
-            git reset --soft $commit
-            echo "Reset to commit $commit: $(git log --format=%B -n 1 ${commit})"
+            if verify "Would you like to reset? (y/n)"; then
+                git reset --soft $commit
+                echo "Reset to commit $commit: $(git log --format=%B -n 1 ${commit})"
+            fi
         fi
     fi
-
 }

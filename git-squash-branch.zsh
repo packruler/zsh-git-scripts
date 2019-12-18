@@ -36,11 +36,13 @@ function git-squash-branch() {
     else
         if git commit ; then
             echo Done
+            return 0
         else
 
             if verify "Would you like to reset? (y/n)"; then
                 git reset --soft $commit
                 echo "Reset to commit $commit: $(git log --format=%B -n 1 ${commit})"
+                return 1
             fi
         fi
     fi

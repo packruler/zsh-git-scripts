@@ -13,7 +13,7 @@ zstyle ':completion:*:descriptions' format '%B%d%b'
 function git-squash-branch() {
     if [[  $# -ne 1 ]]; then
         echo "Usage: $0 (branch built from)"
-        exit -1
+        return 1
     fi
     local branch=$1
 
